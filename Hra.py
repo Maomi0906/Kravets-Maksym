@@ -4,14 +4,14 @@ import random
 import os
 import math
 
-# Kontrola Pillow pro krásné pozadí
+
 try:
     from PIL import Image, ImageTk, ImageDraw
     PILLOW_AVAILABLE = True
 except Exception:
     PILLOW_AVAILABLE = False
 
-# --- Konfigurace ---
+
 COLORS = {
     "bg": "#0f3460",
     "panel": "#16213e",
@@ -84,7 +84,7 @@ class ColorGuessGame:
             return ImageTk.PhotoImage(img)
         except: return None
 
-    # --- LOGIKA REKORDŮ ---
+   
     def load_scores(self):
         if not os.path.exists(self.scores_file): return []
         try:
@@ -108,7 +108,7 @@ class ColorGuessGame:
                 json.dump(data, f, ensure_ascii=False)
         except: pass
 
-    # --- ROZHRANÍ ---
+   
     def show_menu(self):
         self.root.update_idletasks()
         w, h = self.root.winfo_width(), self.root.winfo_height()
@@ -166,10 +166,10 @@ class ColorGuessGame:
             tk.Label(rules_frame, text=rule, font=FONT_MAIN, fg="white", bg=COLORS["panel"], justify="left").pack(pady=5, anchor="w")
         tk.Button(rules_frame, text="ZAVŘÍT", command=self.show_menu, font=FONT_BOLD, bg=COLORS["accent"], fg="white", padx=30, pady=10, relief="flat", cursor="hand2").pack(pady=20)
 
-    # --- LOGIKA UKONČENÍ ---
+   
     def confirm_exit(self):
         """Zobrazí varovné okno před ukončením"""
-        self.game_running = False # Pozastavení hry
+        self.game_running = False 
         for w_child in self.content_frame.winfo_children(): w_child.destroy()
         
         warn_frame = tk.Frame(self.content_frame, bg=COLORS["panel"], padx=40, pady=40)
@@ -187,7 +187,7 @@ class ColorGuessGame:
     def resume_game(self):
         self.game_running = True
         self.timer_loop()
-        self.guess_phase() # Vrací zpět do fáze hádání
+        self.guess_phase() 
 
     def start_game(self):
         self.game_running, self.score, self.remaining_time = True, 0, 120
@@ -198,7 +198,7 @@ class ColorGuessGame:
         self.time_lbl = tk.Label(self.header_frame, text="ČAS: 120", font=FONT_BOLD, bg=COLORS["panel"], fg=COLORS["accent"])
         self.time_lbl.pack(side="left", padx=30)
         
-        # Tlačítko Odejít v záhlaví
+        
         tk.Button(self.header_frame, text="ODEJÍT", command=self.confirm_exit, font=FONT_BOLD, bg="#333", fg="white", relief="flat", cursor="hand2").pack(side="right", padx=30)
         
         self.score_lbl = tk.Label(self.header_frame, text="SKÓRE: 0", font=FONT_BOLD, bg=COLORS["panel"], fg=COLORS["secondary"])
